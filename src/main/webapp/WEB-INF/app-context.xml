@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userService" class="hu.bearmaster.springtutorial.web.service.UserService"/>
+
+    <bean id="myView" class="hu.bearmaster.springtutorial.web.view.MyView" />
+
+    <bean id="myController" class="hu.bearmaster.springtutorial.web.controller.MyController">
+        <constructor-arg ref="userService" />
+        <constructor-arg ref="myView" />
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <constructor-arg>
+            <map>
+                <entry key="/hello" value-ref="myController"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+</beans>
