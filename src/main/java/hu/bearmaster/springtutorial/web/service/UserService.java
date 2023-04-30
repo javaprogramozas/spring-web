@@ -3,9 +3,11 @@ package hu.bearmaster.springtutorial.web.service;
 import hu.bearmaster.springtutorial.web.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);

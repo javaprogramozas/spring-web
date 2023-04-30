@@ -1,26 +1,23 @@
 package hu.bearmaster.springtutorial.web.controller;
 
 import hu.bearmaster.springtutorial.web.service.UserService;
-import hu.bearmaster.springtutorial.web.view.MyView;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-public class MyController extends AbstractController {
+@Controller
+public class MyController {
 
-    private final MyView view;
     private final UserService userService;
 
-    public MyController(MyView view, UserService userService) {
-        this.view = view;
+    public MyController(UserService userService) {
         this.userService = userService;
     }
 
-    @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) {
-        String name = request.getParameter("name");
-        ModelAndView modelAndView = new ModelAndView(view, "user", userService.getUser(name));
-        return modelAndView;
+    @RequestMapping("/hello")
+    public String getUser(@RequestParam(required = false) String name, Model model) {
+        model.addAttribute("user", userService.getUser(name));
+        return "myView";
     }
 }
