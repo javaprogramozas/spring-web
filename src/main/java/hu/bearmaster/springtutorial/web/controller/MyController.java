@@ -18,6 +18,6 @@ public class MyController {
     @RequestMapping("/hello")
     public String getUser(@RequestParam(required = false) String name, Model model) {
         model.addAttribute("user", userService.getUser(name));
-        return "myView";
+        return "hello";
     }
 }
