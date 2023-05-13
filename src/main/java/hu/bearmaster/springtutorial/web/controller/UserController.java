@@ -1,14 +1,13 @@
 package hu.bearmaster.springtutorial.web.controller;
 
 import hu.bearmaster.springtutorial.web.model.User;
+import hu.bearmaster.springtutorial.web.model.request.CreateUserRequest;
 import hu.bearmaster.springtutorial.web.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,22 +20,29 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/users")
+    @GetMapping("/users")
     public String getAllUsers(Model model) {
         List<User> users = userService.getUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
-    // get user by id
-    @RequestMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     public String getUserById(Model model, @PathVariable long id) {
         User user = userService.getUserById(id).orElse(null);
         model.addAttribute("user", user);
         return "user";
     }
 
-    // add user page
+    @GetMapping("/addUser")
+    public String addUserPage(Model model) {
+        model.addAttribute("user", new CreateUserRequest());
+        return "add_user";
+    }
 
-    // add new user
+    @PostMapping("/user")
+    public String addUser(CreateUserRequest request) {
+        User createdUser = userService.createUser(request);
+        return "redirect:/spring-web/user/" + createdUser.getId();
+    }
 }
