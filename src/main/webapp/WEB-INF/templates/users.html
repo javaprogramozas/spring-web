@@ -2,6 +2,14 @@
     <head>
         <meta charset="utf-8">
         <title>Felhasználó lista</title>
+        <style>
+            table {
+                border-spacing: 0px;
+            }
+            .highlight {
+                background-color: lightgray;
+            }
+        </style>
     </head>
     <body>
         <h1>Felhasználók</h1>
@@ -15,7 +23,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${users}" th:class="${highlighted == user.id} ? 'highlight'">
                 <td>
                     <a href="user.html"
                        th:text="${user.id}"
