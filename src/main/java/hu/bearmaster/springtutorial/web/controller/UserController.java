@@ -1,6 +1,7 @@
 package hu.bearmaster.springtutorial.web.controller;
 
 import hu.bearmaster.springtutorial.web.model.User;
+import hu.bearmaster.springtutorial.web.model.UserContext;
 import hu.bearmaster.springtutorial.web.model.request.CreateUserRequest;
 import hu.bearmaster.springtutorial.web.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -21,9 +22,11 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+    private final UserContext userContext;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserContext userContext) {
         this.userService = userService;
+        this.userContext = userContext;
     }
 
     @GetMapping("/users")
@@ -32,7 +35,8 @@ public class UserController {
         List<User> users = userService.getUsers();
         model.addAttribute("users", users);
         model.addAttribute("highlighted", visitedUserId);
-        LOGGER.info("Latest created user: {}", latestUser);
+        LOGGER.info("User context: {}", userContext);
+        LOGGER.info("Current user: {}", userContext.getCurrentUser());
         return "users";
     }
 

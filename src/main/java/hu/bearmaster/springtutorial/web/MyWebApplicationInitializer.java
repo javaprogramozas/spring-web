@@ -21,5 +21,11 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic registration = servletContext.addServlet("spring-web", servlet);
         registration.setLoadOnStartup(1);
         registration.addMapping("/spring-web/*");
+
+        /*
+        FilterRegistration.Dynamic filterRegistration
+                = servletContext.addFilter("webContextFilter", new RequestContextFilter());
+        filterRegistration.addMappingForServletNames(null, false, "spring-web");
+         */
     }
 }
