@@ -1,6 +1,8 @@
 package hu.bearmaster.springtutorial.web;
 
 import hu.bearmaster.springtutorial.web.config.WebConfig;
+import hu.bearmaster.springtutorial.web.filter.HelloFilter;
+import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
@@ -27,5 +29,9 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
                 = servletContext.addFilter("webContextFilter", new RequestContextFilter());
         filterRegistration.addMappingForServletNames(null, false, "spring-web");
          */
+
+        FilterRegistration.Dynamic filterRegistration
+                = servletContext.addFilter("helloFilter", new HelloFilter());
+        filterRegistration.addMappingForServletNames(null, false, "spring-web");
     }
 }
